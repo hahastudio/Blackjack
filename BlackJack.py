@@ -13,11 +13,14 @@ def init_deal(cards, dealer, player):
 	dealer.append(cards.pop())
 	dealer.append(cards.pop())
 	print "Player(You) got cards: ",
-	for card in player:
-		print card,
-	print
+	show_cards(player)
 	print "Dealer(PC) got cards: ",
 	print dealer[0], "unknown"
+
+def show_cards(someone):
+	for card in someone:
+		print card,
+	print
 
 def sum_cards(someone):
 	sum = 0
@@ -41,6 +44,16 @@ def is_blackjack(someone):
 		return True
 	return False
 
+def ask_decision(player):
+	decision = raw_input("Hit or Stand? (H/S)>")
+	decision = decision.upper()
+	while decision not in ("H", "S"):
+		decision = raw_input("Invalid input. Please input \"H\" or \"S\" >")
+	return decision
+
+def hit(cards, someone):
+	someone.append(cards.pop())
+
 if __name__ == '__main__':
 	cards = []
 	player = []
@@ -50,4 +63,17 @@ if __name__ == '__main__':
 	print "Player's(Your) card totals: %d" % sum_cards(player)
 	if is_blackjack(player):
 		print "And Player(You) got a BlackJack!!!"
-	print sum_cards(["♠A", "♥A", "♣A", "♦A"]), sum_cards(["♠A", "♥K"]), sum_cards(["♠A", "♥10", "♦A"]), sum_cards(["♠A", "♥K", "♣5", "♦7"])
+	else:
+		while sum_cards(player) < 21:
+			if ask_decision(player) == "H":
+				hit(cards, player)
+				print "Player(You) got cards: ",
+				show_cards(player)
+				sum_player = sum_cards(player)
+				print "Player's(Your) card totals: %d" % sum_player
+				if sum_player > 21:
+					print "Busted!"
+					break
+			else:
+				break
+	
