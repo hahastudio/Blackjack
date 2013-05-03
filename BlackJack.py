@@ -7,8 +7,21 @@ def init_cards(cards):
 			cards.append(color + rank)
 	random.shuffle(cards)
 
+def init_deal(cards, dealer, player):
+	player.append(cards.pop())
+	player.append(cards.pop())
+	dealer.append(cards.pop())
+	dealer.append(cards.pop())
+	print "Player(You) got cards: ",
+	for card in player:
+		print card,
+	print
+	print "Dealer(PC) got cards: ",
+	print dealer[0], "unknown"
+
 if __name__ == '__main__':
 	cards = []
+	player = []
+	dealer = []
 	init_cards(cards)
-	for card in cards:
-		print card,
+	init_deal(cards, dealer, player)
